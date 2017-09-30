@@ -7,7 +7,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "stripInternal": true,
-    "declaration": true,
+    "declaration": false,
     "outDir": "./app",
     "lib": ["es2015", "dom"]
   },
