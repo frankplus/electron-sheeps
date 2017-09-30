@@ -1,0 +1,24 @@
+{
+  "name": "electron-sheeps",
+  "version": "1.0.0",
+  "description": "Do Androids dream of electron sheeps",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Franciman/electron-sheeps.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Franciman/electron-sheeps/issues"
+  },
+  "homepage": "https://github.com/Franciman/electron-sheeps#readme",
+  "devDependencies": {
+    "electron": "1.7.8"
+  }
+}
