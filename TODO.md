@@ -1,12 +1,12 @@
 A subtitle is a data structure composed of two datatypes:
-- Dialog: String
+- Dialog: String representing the text of the subtitle
 - Range: An interval of time in which the subtitle is to be shown on screen
 
 We need a structure to represent a set of subtitles.
 Its capabilities must be:
 - The subtitles must be ordered
 - Get n-th subtitle
-- Get order for the given subtitle
+- Get the index for a given subtitle (In the sense that you need to know what's the index of every subtitle)
 - Insert subtitle
 - Remove subtitle
 - Update a subtitle (Dialog and or Range)
