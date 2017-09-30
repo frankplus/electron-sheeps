@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "es2015",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -12,7 +13,7 @@
   },
   "files": [
     "./src/app.ts",
-    "./src/background.ts"
+    "./src/main.ts"
   ],
   "angularCompilerOptions": {
     "skipTemplateCodegen": true

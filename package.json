@@ -18,6 +18,10 @@
     "url": "https://github.com/Franciman/electron-sheeps/issues"
   },
   "homepage": "https://github.com/Franciman/electron-sheeps#readme",
+  "dependencies": {
+    "fs-jetpack": "^0.10.2",
+    "typescript": "^2.5.2"
+  },
   "devDependencies": {
     "electron": "1.7.8"
   }
