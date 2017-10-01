@@ -25,7 +25,7 @@ function createWindow () {
 	}))
 
 	// Open the DevTools.
-	// mainWindow.webContents.openDevTools()
+	if(env.development) mainWindow.webContents.openDevTools();
 
 	// Emitted when the window is closed.
 	mainWindow.on('closed', function () {
@@ -36,7 +36,7 @@ function createWindow () {
 	})
 }
 
-var setApplicationMenu = function () {
+function setApplicationMenu () {
 	var menus: any[] = [MenuTemplate];
 	if (env.development) {
         menus.push(devMenuTemplate);

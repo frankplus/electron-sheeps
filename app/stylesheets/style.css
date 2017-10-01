@@ -1,3 +1,35 @@
 .container {
+    height: 100%;
+    width: 100%;
+    position: absolute;
     display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2fr 1fr 2fr;
+}
+
+#playerpanel {
+    background-color: green;
+}
+
+#waveform {
+    background-color: yellow;
+}
+
+#controlpanel {
+    background-color: blue;
+    grid-column: 1 / span 2;
+    grid-row: 2 / span 1
+}
+
+#subeditor {
+    background-color: red;
+}
+
+#sublist {
+    background-color: orange;
+}
+
+#videopanel {
+    height: 100%;
+    width: 100%;
 }

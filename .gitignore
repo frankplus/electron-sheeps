@@ -10,6 +10,7 @@ Thumbs.db
 /app/main.js
 /app/env.js
 /app/**/*.map
+/app/menu
 
 /dist
 
