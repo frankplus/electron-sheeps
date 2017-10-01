@@ -6,11 +6,8 @@ Thumbs.db
 .vscode/
 
 # ignore everything in 'app' folder what had been generated from 'src' folder
-/app/app.js
-/app/main.js
-/app/env.js
+/app/**/*.js
 /app/**/*.map
-/app/menu
 
 /dist
 
