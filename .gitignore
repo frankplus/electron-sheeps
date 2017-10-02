@@ -12,3 +12,7 @@ Thumbs.db
 /dist
 
 /coverage
+
+# ignore files generated from makefile
+extra/**/*.o
+extra/**/pex
