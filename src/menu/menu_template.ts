@@ -1,4 +1,6 @@
-import {BrowserWindow, dialog} from 'electron';
+import { BrowserWindow, dialog, ipcMain } from 'electron';
+
+import { spawn } from 'child_process';
 
 export var MenuTemplate = {
     label: 'File',
@@ -15,7 +17,14 @@ export var MenuTemplate = {
                     ]
                 }
                 let parentWindow = (process.platform == 'darwin') ? null : BrowserWindow.getFocusedWindow();
-                dialog.showOpenDialog(parentWindow, options, function (f) { console.log("got a file: " + f) });
+                dialog.showOpenDialog(parentWindow, options, function (f) {
+                    console.log("got a file: " + f)
+
+                    let extractor = spawn('extra/pex', [f[0], './output_peaks']);
+                    extractor.on('close', (code) => {
+                            parentWindow.webContents.send('extraction-finished', code);
+                    });
+                });
             }
         }
     ]

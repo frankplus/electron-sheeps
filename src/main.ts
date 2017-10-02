@@ -4,8 +4,6 @@ import { devMenuTemplate } from './menu/dev_menu_template';
 import * as path from 'path';
 import * as url from 'url';
 
-import { spawnSync } from 'child_process';
-
 // Special module holding environment variables
 import env from './env';
 
@@ -66,19 +64,6 @@ app.on('activate', function () {
 	if (mainWindow === null) {
 		createWindow()
 	}
-})
-
-ipcMain.on('extract-peaks', (event, arg) => {
-        let res = spawnSync('./extra/pex', [arg.media, arg.out])
-        if(res.status == 0) {
-            event.returnValue = 'Yeah'
-        }
-        else if(res.status == 2) {
-            event.returnValue = 'No audio'
-        }
-        else {
-            event.returnValue = 'Nay'
-        }
 })
 
 // In this file you can include the rest of your app's specific main process
