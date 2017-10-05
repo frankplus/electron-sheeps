@@ -6,24 +6,37 @@ export var MenuTemplate = {
     label: 'File',
     submenu: [
         {
-            label: "Open video",
+            label: "Open existing project",
             accelerator: "CmdOrCtrl+O",
             click: function () {
-                let options: object = {
-                    title: "Open file", 
+                let dialogOptions: object = {
+                    title: "Open existing project", 
                     properties: ['openFile'],
                     filters: [
-                        {name: 'Movies', extensions: ['mp4','webm','ogg','mov','avi','mkv','m4v']}
+                        {name: 'Electron sheeps projects', extensions: ['esproj']}
                     ]
                 }
                 let parentWindow = (process.platform == 'darwin') ? null : BrowserWindow.getFocusedWindow();
-                dialog.showOpenDialog(parentWindow, options, function (f) {
+                dialog.showOpenDialog(parentWindow, dialogOptions, function (f) {
                     console.log("got a file: " + f)
-
-                    let extractor = spawn('extra/pex', [f[0], './output_peaks']);
-                    extractor.on('close', (code) => {
-                            parentWindow.webContents.send('extraction-finished', code);
-                    });
+                    parentWindow.webContents.send('open-project', f[0]);
+                });
+            }
+        },
+        {
+            label: "Save project",
+            accelerator: "CmdOrCtrl+S",
+            click: function () {
+                let dialogOptions: object = {
+                    title: "Save project", 
+                    filters: [
+                        {name: 'Electron sheeps projects', extensions: ['esproj']}
+                    ]
+                }
+                let parentWindow = (process.platform == 'darwin') ? null : BrowserWindow.getFocusedWindow();
+                dialog.showSaveDialog(parentWindow, dialogOptions, function (f) {
+                    console.log("got a file: " + f)
+                    parentWindow.webContents.send('save-project', f);
                 });
             }
         }
