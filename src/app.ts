@@ -28,5 +28,5 @@ form.addEventListener('submit', function createNewProject(ev) {
     console.log("switching section")
 
     document.getElementById("newProjectSection").classList.remove('is-shown');
-    document.getElementById("container").classList.add('is-shown');
+    document.getElementById("mainSection").classList.add('is-shown');
 });
