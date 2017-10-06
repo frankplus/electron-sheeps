@@ -8,8 +8,8 @@
 </head>
 
 <body>
-	<section id="newProjectSection" class="section">
-		<form id="newProjectForm" onsubmit="submitproject()">
+	<section id="newProjectSection" class="section is-shown">
+		<form id="newProjectForm">
 			Media file:
 			<input type="file" name="audioSource" placeholder="media file" required>
 			<br> Subtitle file:
@@ -21,7 +21,7 @@
 		</form>
 	</section>
 
-	<section class="container" class="section">
+	<section id="container" class="container section">
 		<!-- waveform generated from the audio -->
 		<div id="waveform">
 			waveform

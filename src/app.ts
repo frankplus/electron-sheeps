@@ -20,7 +20,6 @@ ipcRenderer.on('save-project', (event, outputfile) => {
     console.log(`project saved`)
 });
 
-/*
 let form = document.getElementById("newProjectForm");
 form.addEventListener('submit', function createNewProject(ev) {
     // Prevent <form> from sending a request, we're overriding this behavior here
@@ -31,11 +30,3 @@ form.addEventListener('submit', function createNewProject(ev) {
     document.getElementById("newProjectSection").classList.remove('is-shown');
     document.getElementById("container").classList.add('is-shown');
 });
-*/
-
-function submitproject(){
-    console.log("switching section")
-
-    document.getElementById("newProjectSection").classList.remove('is-shown');
-    document.getElementById("container").classList.add('is-shown');
-}
