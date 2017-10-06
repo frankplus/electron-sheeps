@@ -1,0 +1,25 @@
+<html>
+<head>
+
+</head>
+<body>
+<form id="newProjectForm">
+Media file: <input type="file" name="audioSource" placeholder="media file" required>
+<br>
+Subtitle file: <input type="file" name="subtitleFile" placeholder="subtitles" required>
+<br>
+Reference subtitles file: <input type="file" name="referenceSubtitleFile" placeholder="reference">
+<br>
+<input type="submit">
+</form>
+
+<script>
+let form = document.getElementById("newProjectForm");
+form.addEventListener('submit', function createNewProject(ev) {
+    // Prevent <form> from sending a request, we're overriding this behavior here
+    ev.preventDefault();
+});
+</script>
+
+</body>
+</html>
