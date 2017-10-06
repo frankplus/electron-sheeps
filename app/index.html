@@ -5,14 +5,26 @@
 	<meta charset="UTF-8">
 	<title>Electron sheeps</title>
 	<link href="stylesheets/style.css" rel="stylesheet" type="text/css">
-	<script src="app.js"></script>
 </head>
 
 <body>
-	<div class="container">
+	<section id="newProjectSection" class="section">
+		<form id="newProjectForm" onsubmit="submitproject()">
+			Media file:
+			<input type="file" name="audioSource" placeholder="media file" required>
+			<br> Subtitle file:
+			<input type="file" name="subtitleFile" placeholder="subtitles" required>
+			<br> Reference subtitles file:
+			<input type="file" name="referenceSubtitleFile" placeholder="reference">
+			<br>
+			<input type="submit">
+		</form>
+	</section>
+
+	<section class="container" class="section">
 		<!-- waveform generated from the audio -->
 		<div id="waveform">
-				waveform
+			waveform
 		</div>
 
 		<!-- video player -->
@@ -36,7 +48,9 @@
 			sublist
 		</div>
 
-	</div>
+	</section>
+
+	<script src="app.js"></script>
 </body>
 
 </html>
