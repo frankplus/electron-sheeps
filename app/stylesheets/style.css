@@ -1,10 +1,59 @@
-.container {
+/* Section transitions------------------ */
+
+.section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    color: var(--color-accent);
+  
+    /* Hide */
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: visibility 0s .12s linear , opacity .12s ease-in, transform .12s ease-in;
+  }
+
+.section.is-shown {
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+    transition: visibility 0s 0s linear , opacity .36s ease-out, transform .36s ease-out;
+}
+
+/* new project form style */
+
+#newProjectSection{
+    background-color: #A0A0A0;
+}
+
+#newProjectForm {
+    margin:0 auto;
+    margin-top: 100px;
+    padding:10px;
+	max-width: 600px;
+    background:#EEEBB8;
+	border-radius: 10px;
+	-moz-box-shadow:0px 0px 10px #333333;
+    -webkit-box-shadow:0px 0px 10px #333333;
+    box-shadow:0px 0px 10px #333333;
+}
+
+/* main program style */
+
+.main {
     height: 100%;
     width: 100%;
     position: absolute;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 2fr 1fr 2fr;
+    background-color: #A0A0A0;
 }
 
 #playerpanel {
@@ -33,3 +82,4 @@
     height: 100%;
     width: 100%;
 }
+
