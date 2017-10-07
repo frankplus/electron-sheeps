@@ -21,6 +21,10 @@ ipcRenderer.on('save-project', (event, outputfile) => {
     console.log(`project saved`);
 });
 
+ipcRenderer.on('new-project', (event, outputfile) => {
+    switchToNewProjectSection();
+});
+
 let form = document.getElementById("newProjectForm");
 form.addEventListener('submit', function createNewProject(ev) {
     // Prevent <form> from sending a request, we're overriding this behavior here
@@ -48,4 +52,10 @@ function switchToMainSection(){
     //change view to the main program section
     document.getElementById("newProjectSection").classList.remove('is-shown');
     document.getElementById("mainSection").classList.add('is-shown');
+}
+
+function switchToNewProjectSection(){
+    //change view to the new project form section
+    document.getElementById("newProjectSection").classList.add('is-shown');
+    document.getElementById("mainSection").classList.remove('is-shown');
 }

@@ -6,6 +6,14 @@ export var MenuTemplate = {
     label: 'File',
     submenu: [
         {
+            label: "New project",
+            accelerator: "CmdOrCtrl+N",
+            click: function () {
+                let parentWindow = (process.platform == 'darwin') ? null : BrowserWindow.getFocusedWindow();
+                parentWindow.webContents.send('new-project');
+            }
+        },
+        {
             label: "Open existing project",
             accelerator: "CmdOrCtrl+O",
             click: function () {
