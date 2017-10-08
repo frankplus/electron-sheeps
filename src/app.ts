@@ -2,10 +2,9 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-const { ipcRenderer } = require('electron')
-
-let ts = require('./translation_project')
-let video = require('./video')
+import {ipcRenderer} from 'electron'
+import * as video from './video'
+import * as ts from './translation_project'
 
 let proj;
 let videoplayer;

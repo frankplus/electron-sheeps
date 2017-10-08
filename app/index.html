@@ -35,7 +35,7 @@
 
 		<!-- video player -->
 		<div id="playerpanel">
-			<video id="videopanel">
+			<video id="videopanel" controls>
 				<source id="videosource"/>
 			</video>
 		</div>
@@ -43,8 +43,8 @@
 		<!-- control panel with play, pause, rewind, forward.. buttons -->
 		<div id="controlpanel">
 			controlpanel<br>
-			<button class="btn" onclick="play()">Play</button>
-			<button class="btn" onclick="pause()">Pause</button>
+			<button class="btn">Play</button>
+			<button class="btn">Pause</button>
 		</div>
 
 		<!-- text editor where the subtitles are edited-->
@@ -59,7 +59,9 @@
 
 	</section>
 
-	<script src="app.js"></script>
+	<script>
+		require('./app.js')
+	</script>
 </body>
 
 </html>
