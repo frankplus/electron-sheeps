@@ -5,11 +5,12 @@
 const { ipcRenderer } = require('electron')
 
 let ts = require('./translation_project')
+let video = require('./video')
 
-//uncomment for example project
 let proj;
+let videoplayer;
 
-//ipc main process-renderers listeners
+//listeners to application menu calls
 ipcRenderer.on('open-project', (event, file) => {
     proj = ts.loadTranslationProjectFile(file);
     console.log(`project opened ${file}`);
@@ -25,13 +26,14 @@ ipcRenderer.on('new-project', (event, outputfile) => {
     switchToNewProjectSection();
 });
 
+//listener to the submit of new project form
 let form = document.getElementById("newProjectForm");
 form.addEventListener('submit', function createNewProject(ev) {
     // Prevent <form> from sending a request, we're overriding this behavior here
     ev.preventDefault();
 
     //create project using input data
-    let source:any = document.getElementById("audioSource");
+    let source:any = document.getElementById("mediaSource");
     let subfile:any = document.getElementById("subtitleFile");
     let refsubfile:any = document.getElementById("referenceSubtitleFile");
 
@@ -44,6 +46,7 @@ form.addEventListener('submit', function createNewProject(ev) {
     console.log("refsubfile: " + refsubfilepath);
 
     proj = new ts.TranslationProject(audiosourcepath, subfilepath, refsubfilepath);
+    videoplayer = new video.Video(proj); 
 
     switchToMainSection();
 });
@@ -58,4 +61,13 @@ function switchToNewProjectSection(){
     //change view to the new project form section
     document.getElementById("newProjectSection").classList.add('is-shown');
     document.getElementById("mainSection").classList.remove('is-shown');
+}
+
+//application control
+function play(){
+    videoplayer.play();
+}
+
+function pause(){
+    videoplayer.pause();
 }
