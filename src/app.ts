@@ -6,62 +6,71 @@ import {ipcRenderer} from 'electron'
 import {Videoplayer} from './video'
 import * as ts from './translation_project'
 
-let proj;
-let videoplayer;
 
-//listeners to application menu calls
-ipcRenderer.on('open-project', (event, file) => {
-    proj = ts.loadTranslationProjectFile(file);
-    console.log(`project opened ${file}`);
-    switchToMainSection();
-});
+class ApplicationManager {
+    project?: ts.TranslationProject;
 
-ipcRenderer.on('save-project', (event, outputfile) => {
-    ts.writeTranslationProjectToFile(proj, outputfile);
-    console.log(`project saved`);
-});
+    constructor() {
+        this.project = undefined;
 
-ipcRenderer.on('new-project', (event, outputfile) => {
-    switchToNewProjectSection();
-});
+        // Listen to events that can change the application state
+        ipcRenderer.on('open-project', (event, file) => {
+            let project = ts.loadTranslationProjectFile(file);
+            console.log(`project opened ${file}`);
+            this.startProject(project);
+        });
 
-//listener to the submit of new project form
-let form = document.getElementById("newProjectForm");
-form.addEventListener('submit', function createNewProject(ev) {
-    // Prevent <form> from sending a request, we're overriding this behavior here
-    ev.preventDefault();
+        ipcRenderer.on('save-project', (event, outputFile) => {
+            if(this.project) {
+                ts.writeTranslationProjectToFile(this.project, outputFile);
+            }
+        });
 
-    //create project using input data
-    let source:any = document.getElementById("mediaSource");
-    let subfile:any = document.getElementById("subtitleFile");
-    let refsubfile:any = document.getElementById("referenceSubtitleFile");
+        ipcRenderer.on('new-project', (event, outputFile) => {
+            this.createNewProject();
+        });
 
-    let audiosourcepath = source.files[0].path;
-    let subfilepath = subfile.files[0].path;
-    let refsubfilepath = refsubfile.files[0];
-    if(refsubfilepath !== undefined) refsubfilepath = refsubfilepath.path;
+        document.getElementById("newProjectForm").addEventListener('submit', (ev) => {
+            // Prevent <form> from sending an HTTP request, we're overriding this behaviour here
+            ev.preventDefault();
 
-    console.log("source: " + audiosourcepath);
-    console.log("subfile: " + subfilepath);
-    console.log("refsubfile: " + refsubfilepath);
+            //create project using input data
+            let source = <HTMLInputElement>document.getElementById("audioSource");
+            let subfile = <HTMLInputElement>document.getElementById("subtitleFile");
+            let refsubfile = <HTMLInputElement>document.getElementById("referenceSubtitleFile");
 
-    proj = new ts.TranslationProject(audiosourcepath, subfilepath, refsubfilepath);
-    videoplayer = new Videoplayer(proj); 
+            let audiosourcepath = source.files[0].path;
+            let subfilepath = subfile.files[0].path;
+            let refsubfilepath = refsubfile.files[0] ? refsubfile.files[0].path : undefined;
 
-    switchToMainSection();
-});
+            console.log("source: " + audiosourcepath);
+            console.log("subfile: " + subfilepath);
+            console.log("refsubfile: " + refsubfilepath);
 
-function switchToMainSection(){
-    //change view to the main program section
-    document.getElementById("newProjectSection").classList.remove('is-shown');
-    document.getElementById("mainSection").classList.add('is-shown');
+            this.startProject(new ts.TranslationProject(audiosourcepath, subfilepath, refsubfilepath));
+        });
+    }
+
+    // Loads project settings and shows the main program section
+    startProject(newProject: ts.TranslationProject) {
+
+        proj = new ts.TranslationProject(audiosourcepath, subfilepath, refsubfilepath);
+        videoplayer = new Videoplayer(proj); 
+        this.project = newProject;
+
+        //change view to the main program section
+        document.getElementById("newProjectSection").classList.remove('is-shown');
+        document.getElementById("mainSection").classList.add('is-shown');
+    }
+
+    // Shows the form to create a new project
+    createNewProject() {
+        //change view to the new project form section
+        document.getElementById("newProjectSection").classList.add('is-shown');
+        document.getElementById("mainSection").classList.remove('is-shown');
+    }
 }
 
-function switchToNewProjectSection(){
-    //change view to the new project form section
-    document.getElementById("newProjectSection").classList.add('is-shown');
-    document.getElementById("mainSection").classList.remove('is-shown');
-}
 
 //application control
 document.getElementById('playbutton').addEventListener("click", function(){
@@ -71,3 +80,5 @@ document.getElementById('playbutton').addEventListener("click", function(){
 document.getElementById('pausebutton').addEventListener("click", function(){
     videoplayer.pause();
 });
+
+let appManager = new ApplicationManager();
