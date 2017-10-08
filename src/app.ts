@@ -2,9 +2,10 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-import { ipcRenderer } from 'electron';
+import {ipcRenderer} from 'electron'
+import {Videoplayer} from './video'
+import * as ts from './translation_project'
 
-import * as ts from './translation_project';
 
 class ApplicationManager {
     project?: ts.TranslationProject;
@@ -15,6 +16,7 @@ class ApplicationManager {
         // Listen to events that can change the application state
         ipcRenderer.on('open-project', (event, file) => {
             let project = ts.loadTranslationProjectFile(file);
+            console.log(`project opened ${file}`);
             this.startProject(project);
         });
 
@@ -33,9 +35,9 @@ class ApplicationManager {
             ev.preventDefault();
 
             //create project using input data
-            let source:HTMLInputElement = <HTMLInputElement>document.getElementById("audioSource");
-            let subfile:HTMLInputElement = <HTMLInputElement>document.getElementById("subtitleFile");
-            let refsubfile:HTMLInputElement  = <HTMLInputElement>document.getElementById("referenceSubtitleFile");
+            let source = <HTMLInputElement>document.getElementById("audioSource");
+            let subfile = <HTMLInputElement>document.getElementById("subtitleFile");
+            let refsubfile = <HTMLInputElement>document.getElementById("referenceSubtitleFile");
 
             let audiosourcepath = source.files[0].path;
             let subfilepath = subfile.files[0].path;
@@ -51,6 +53,9 @@ class ApplicationManager {
 
     // Loads project settings and shows the main program section
     startProject(newProject: ts.TranslationProject) {
+
+        proj = new ts.TranslationProject(audiosourcepath, subfilepath, refsubfilepath);
+        videoplayer = new Videoplayer(proj); 
         this.project = newProject;
 
         //change view to the main program section
@@ -65,5 +70,15 @@ class ApplicationManager {
         document.getElementById("mainSection").classList.remove('is-shown');
     }
 }
+
+
+//application control
+document.getElementById('playbutton').addEventListener("click", function(){
+    videoplayer.play();
+});
+
+document.getElementById('pausebutton').addEventListener("click", function(){
+    videoplayer.pause();
+});
 
 let appManager = new ApplicationManager();

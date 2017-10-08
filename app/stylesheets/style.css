@@ -60,14 +60,21 @@
     background-color: green;
 }
 
+#videopanel {
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
 #waveform {
     background-color: yellow;
 }
 
 #controlpanel {
-    background-color: blue;
+    background-color: grey;
     grid-column: 1 / span 2;
-    grid-row: 2 / span 1
+    grid-row: 2 / span 1;
+    padding: 20px;
 }
 
 #subeditor {
@@ -78,8 +85,5 @@
     background-color: orange;
 }
 
-#videopanel {
-    height: 100%;
-    width: 100%;
-}
+
 

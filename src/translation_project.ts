@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from 'fs';
 export class TranslationProject {
     // The path of the multimedia file
     // which contains the audio we want to sub
-    audioSourcePath: string;
+    mediaSourcePath: string;
 
     // The path of the subtitle file we're going to edit
     subtitleFilePath: string;
@@ -11,8 +11,8 @@ export class TranslationProject {
     // The path of an optional subtitle file used as reference
     referenceSubtitleFilePath?: string;
 
-    constructor(audioSourcePath: string, subtitleFilePath: string, referenceSubtitleFilePath?: string) {
-        this.audioSourcePath = audioSourcePath;
+    constructor(mediaSourcePath: string, subtitleFilePath: string, referenceSubtitleFilePath?: string) {
+        this.mediaSourcePath = mediaSourcePath;
         this.subtitleFilePath = subtitleFilePath;
         this.referenceSubtitleFilePath = referenceSubtitleFilePath;
     }
