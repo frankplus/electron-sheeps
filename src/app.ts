@@ -2,9 +2,11 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-const { ipcRenderer } = require('electron')
+const {ipcRenderer} = require('electron');
+const {SrtManager} = require('./srt')
+const path = require('path');
 
-let ts = require('./translation_project')
+const ts = require('./translation_project')
 
 //uncomment for example project
 let proj;
@@ -59,3 +61,5 @@ function switchToNewProjectSection(){
     document.getElementById("newProjectSection").classList.add('is-shown');
     document.getElementById("mainSection").classList.remove('is-shown');
 }
+
+let obj = new SrtManager(path.join(__dirname, 'scrubs.srt'));

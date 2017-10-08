@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2015",
     "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
@@ -8,13 +8,17 @@
     "experimentalDecorators": true,
     "stripInternal": true,
     "declaration": false,
+    "strictNullChecks": false,
     "outDir": "./app",
     "lib": ["es2015", "dom"]
   },
   "files": [
     "./src/app.ts",
     "./src/main.ts",
-    "./src/translation_project.ts"
+    "./src/translation_project.ts",
+    "./src/srt.ts",
+    "./src/srtobject.ts",
+    "./src/subtitletree.ts"
   ],
   "angularCompilerOptions": {
     "skipTemplateCodegen": true
