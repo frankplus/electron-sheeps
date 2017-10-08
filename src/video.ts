@@ -14,15 +14,16 @@ export class Video {
             //load source
             let videosource:any = document.getElementById("videosource");
             videosource.src = mediaPath;
-            //if(extension=="mkv") extension="webm";
-            videosource.type = 'video/'+extension;
 
             //load video
             this.videopanel = document.getElementById("videopanel");
             this.videopanel.load();
 
             //play
-            this.play();
+            //this.play();
+        }
+        else{
+            console.log("file type not supported");
         }
     }
 

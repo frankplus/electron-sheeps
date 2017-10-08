@@ -39,7 +39,8 @@ form.addEventListener('submit', function createNewProject(ev) {
 
     let audiosourcepath = source.files[0].path;
     let subfilepath = subfile.files[0].path;
-    let refsubfilepath = refsubfile.files[0].path;
+    let refsubfilepath = refsubfile.files[0];
+    if(refsubfilepath !== undefined) refsubfilepath = refsubfilepath.path;
 
     console.log("source: " + audiosourcepath);
     console.log("subfile: " + subfilepath);
