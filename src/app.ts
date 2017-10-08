@@ -3,7 +3,7 @@
 // All of the Node.js APIs are available in this process.
 
 import {ipcRenderer} from 'electron'
-import * as video from './video'
+import {Videoplayer} from './video'
 import * as ts from './translation_project'
 
 let proj;
@@ -46,7 +46,7 @@ form.addEventListener('submit', function createNewProject(ev) {
     console.log("refsubfile: " + refsubfilepath);
 
     proj = new ts.TranslationProject(audiosourcepath, subfilepath, refsubfilepath);
-    videoplayer = new video.Video(proj); 
+    videoplayer = new Videoplayer(proj); 
 
     switchToMainSection();
 });
@@ -64,10 +64,10 @@ function switchToNewProjectSection(){
 }
 
 //application control
-function play(){
+document.getElementById('playbutton').addEventListener("click", function(){
     videoplayer.play();
-}
+});
 
-function pause(){
+document.getElementById('pausebutton').addEventListener("click", function(){
     videoplayer.pause();
-}
+});

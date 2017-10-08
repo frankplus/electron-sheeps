@@ -1,6 +1,6 @@
 import {TranslationProject} from './translation_project'
 
-export class Video {
+export class Videoplayer {
     private videopanel: any;
     private getExtensionFromPath(path: string){
         return path.split('.').pop();
