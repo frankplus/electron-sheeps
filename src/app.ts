@@ -2,20 +2,20 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-const { ipcRenderer } = require('electron');
+import { ipcRenderer } from 'electron';
 
-let ts = require('./translation_project');
+import * as ts from './translation_project';
 
 class ApplicationManager {
-    project?: any;
+    project?: ts.TranslationProject;
 
     constructor() {
         this.project = undefined;
 
-        // Listen to events that change the application state
+        // Listen to events that can change the application state
         ipcRenderer.on('open-project', (event, file) => {
-            this.project = ts.loadTranslationProjectFile(file);
-            this.startProject();
+            let project = ts.loadTranslationProjectFile(file);
+            this.startProject(project);
         });
 
         ipcRenderer.on('save-project', (event, outputFile) => {
@@ -33,9 +33,9 @@ class ApplicationManager {
             ev.preventDefault();
 
             //create project using input data
-            let source:any = document.getElementById("audioSource");
-            let subfile:any = document.getElementById("subtitleFile");
-            let refsubfile:any = document.getElementById("referenceSubtitleFile");
+            let source:HTMLInputElement = <HTMLInputElement>document.getElementById("audioSource");
+            let subfile:HTMLInputElement = <HTMLInputElement>document.getElementById("subtitleFile");
+            let refsubfile:HTMLInputElement  = <HTMLInputElement>document.getElementById("referenceSubtitleFile");
 
             let audiosourcepath = source.files[0].path;
             let subfilepath = subfile.files[0].path;
@@ -45,18 +45,20 @@ class ApplicationManager {
             console.log("subfile: " + subfilepath);
             console.log("refsubfile: " + refsubfilepath);
 
-            this.project =  new ts.TranslationProject(audiosourcepath, subfilepath, refsubfilepath);
-
-            this.startProject();
+            this.startProject(new ts.TranslationProject(audiosourcepath, subfilepath, refsubfilepath));
         });
     }
 
-    startProject() {
+    // Loads project settings and shows the main program section
+    startProject(newProject: ts.TranslationProject) {
+        this.project = newProject;
+
         //change view to the main program section
         document.getElementById("newProjectSection").classList.remove('is-shown');
         document.getElementById("mainSection").classList.add('is-shown');
     }
 
+    // Shows the form to create a new project
     createNewProject() {
         //change view to the new project form section
         document.getElementById("newProjectSection").classList.add('is-shown');
