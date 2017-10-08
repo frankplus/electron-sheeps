@@ -25,6 +25,17 @@ export class Videoplayer {
         else{
             console.log("file type not supported");
         }
+
+
+        //application control
+        document.getElementById('playbutton').addEventListener("click", () => {
+            this.play();
+        });
+
+        document.getElementById('pausebutton').addEventListener("click", () => {
+            this.pause();
+        });
+
     }
 
     //play the video

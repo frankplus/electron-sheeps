@@ -8,10 +8,12 @@ import * as ts from './translation_project'
 
 
 class ApplicationManager {
-    project?: ts.TranslationProject;
+    project ?: ts.TranslationProject;
+    videoplayer ?: Videoplayer;
 
     constructor() {
         this.project = undefined;
+        this.videoplayer = undefined;
 
         // Listen to events that can change the application state
         ipcRenderer.on('open-project', (event, file) => {
@@ -35,7 +37,7 @@ class ApplicationManager {
             ev.preventDefault();
 
             //create project using input data
-            let source = <HTMLInputElement>document.getElementById("audioSource");
+            let source  = <HTMLInputElement>document.getElementById("mediaSource");
             let subfile = <HTMLInputElement>document.getElementById("subtitleFile");
             let refsubfile = <HTMLInputElement>document.getElementById("referenceSubtitleFile");
 
@@ -54,9 +56,8 @@ class ApplicationManager {
     // Loads project settings and shows the main program section
     startProject(newProject: ts.TranslationProject) {
 
-        proj = new ts.TranslationProject(audiosourcepath, subfilepath, refsubfilepath);
-        videoplayer = new Videoplayer(proj); 
         this.project = newProject;
+        this.videoplayer = new Videoplayer(this.project);
 
         //change view to the main program section
         document.getElementById("newProjectSection").classList.remove('is-shown');
@@ -71,14 +72,5 @@ class ApplicationManager {
     }
 }
 
-
-//application control
-document.getElementById('playbutton').addEventListener("click", function(){
-    videoplayer.play();
-});
-
-document.getElementById('pausebutton').addEventListener("click", function(){
-    videoplayer.pause();
-});
 
 let appManager = new ApplicationManager();
