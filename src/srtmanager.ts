@@ -10,7 +10,7 @@ export class SrtManager {
     public constructor(srtFilePath: string) {
         this.tree = EmptyTree;
         // path.join(__dirname, 'scrubs.srt')
-        let content = readFileSync(srtFilePath).toString();
+        let content: string = readFileSync(srtFilePath, 'utf-8');
         let subtitles = parse(content);
         /*
         [

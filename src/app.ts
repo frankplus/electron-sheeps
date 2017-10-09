@@ -47,6 +47,22 @@ form.addEventListener('submit', function createNewProject(ev) {
 
     proj = new ts.TranslationProject(audiosourcepath, subfilepath, refsubfilepath);
 
+    let obj = new SrtManager(path.join(__dirname, 'scrubs.srt'));
+
+    let tbody = document.getElementById("subtitles-table") as HTMLTableSectionElement;
+    let index = 0;
+    for (let subtitle of obj.m_tree.inOrder()) {
+        let row = document.createElement("tr");
+        let id = document.createElement("td");
+        let text = id.cloneNode();
+        
+        id.textContent = index.toString();
+        text.textContent = subtitle.text;
+        row.appendChild(id);
+        row.appendChild(text);
+        tbody.appendChild(row);
+    }
+
     switchToMainSection();
 });
 
@@ -61,5 +77,3 @@ function switchToNewProjectSection(){
     document.getElementById("newProjectSection").classList.add('is-shown');
     document.getElementById("mainSection").classList.remove('is-shown');
 }
-
-let obj = new SrtManager(path.join(__dirname, 'scrubs.srt'));
