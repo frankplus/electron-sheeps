@@ -47,4 +47,10 @@ export class Videoplayer {
     pause(){
         this.videopanel.pause();
     }
+
+    //set subtitle text overlay on the video
+    setOverlayText(text: string) {
+        let overlaysub:any = document.getElementById("overlaysub");
+        overlaysub.innerHTML = text;
+    } 
 }
