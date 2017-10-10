@@ -3,13 +3,13 @@
 // All of the Node.js APIs are available in this process.
 
 import {ipcRenderer} from 'electron'
-import {Videoplayer} from './video'
+import {VideoPlayer} from './video'
 import * as ts from './translation_project'
 
 
 class ApplicationManager {
     project ?: ts.TranslationProject;
-    videoplayer ?: Videoplayer;
+    videoplayer ?: VideoPlayer;
 
     constructor() {
         this.project = undefined;
@@ -57,7 +57,7 @@ class ApplicationManager {
     startProject(newProject: ts.TranslationProject) {
 
         this.project = newProject;
-        this.videoplayer = new Videoplayer(this.project);
+        this.videoplayer = new VideoPlayer(this.project.mediaSourcePath);
 
         //change view to the main program section
         document.getElementById("newProjectSection").classList.remove('is-shown');

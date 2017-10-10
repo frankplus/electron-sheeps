@@ -1,19 +1,18 @@
 import {TranslationProject} from './translation_project'
 
-export class Videoplayer {
+export class VideoPlayer {
     private videopanel: any;
     private getExtensionFromPath(path: string){
         return path.split('.').pop();
     }
-    constructor(proj: TranslationProject) {
+    constructor(mediaSourcePath: string) {
         //extract extension from path and check if supported
-        let mediaPath = proj.mediaSourcePath;
-        let extension = this.getExtensionFromPath(mediaPath);
+        let extension = this.getExtensionFromPath(mediaSourcePath);
         let supportedExtensions = ['mp4','webm','ogg','mov','avi','mkv','m4v'];
         if(supportedExtensions.indexOf(extension) > -1){
             //load source
             let videosource:any = document.getElementById("videosource");
-            videosource.src = mediaPath;
+            videosource.src = mediaSourcePath;
 
             //load video
             this.videopanel = document.getElementById("videopanel");
