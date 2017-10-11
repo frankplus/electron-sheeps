@@ -14,7 +14,8 @@
   "files": [
     "./src/app.ts",
     "./src/main.ts",
-    "./src/translation_project.ts"
+    "./src/translation_project.ts",
+    "./src/subtitle_list.ts"
   ],
   "angularCompilerOptions": {
     "skipTemplateCodegen": true

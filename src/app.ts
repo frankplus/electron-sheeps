@@ -6,6 +6,8 @@ const { ipcRenderer } = require('electron')
 
 let ts = require('./translation_project')
 
+const { SubtitleList } = require('./subtitle_list')
+
 //uncomment for example project
 let proj;
 
@@ -52,6 +54,9 @@ function switchToMainSection(){
     //change view to the main program section
     document.getElementById("newProjectSection").classList.remove('is-shown');
     document.getElementById("mainSection").classList.add('is-shown');
+
+    let sl = new SubtitleList(proj.subtitleFilePath);
+
 }
 
 function switchToNewProjectSection(){

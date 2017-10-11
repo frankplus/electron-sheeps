@@ -76,6 +76,17 @@
 
 #sublist {
     background-color: orange;
+    table-layout: fixed;
+}
+
+#sublist td, #sublist th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+#sublist tr:hover td {
+    background-color: #ddd;
 }
 
 #videopanel {
