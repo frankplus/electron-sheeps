@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/Franciman/electron-sheeps#readme",
   "dependencies": {
-    "subtitle": "1.0.0",
+    "subtitle": "1.0.1",
     "typescript": "^2.5.2"
   },
   "devDependencies": {
