@@ -51,13 +51,23 @@ class ApplicationManager {
 
             this.startProject(new ts.TranslationProject(audiosourcepath, subfilepath, refsubfilepath));
         });
+
+
+        //application control buttons
+        document.getElementById('playbutton').addEventListener("click", () => {
+            this.videoplayer.play();
+        });
+
+        document.getElementById('pausebutton').addEventListener("click", () => {
+            this.videoplayer.pause();
+        });
     }
 
     // Loads project settings and shows the main program section
     startProject(newProject: ts.TranslationProject) {
 
         this.project = newProject;
-        this.videoplayer = new VideoPlayer(this.project.mediaSourcePath);
+        this.videoplayer = new VideoPlayer(this.project);
 
         //change view to the main program section
         document.getElementById("newProjectSection").classList.remove('is-shown');
@@ -69,6 +79,9 @@ class ApplicationManager {
         //change view to the new project form section
         document.getElementById("newProjectSection").classList.add('is-shown');
         document.getElementById("mainSection").classList.remove('is-shown');
+        
+        //stop video and subtitles
+        this.videoplayer.pause();
     }
 }
 
