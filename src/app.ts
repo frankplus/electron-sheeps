@@ -5,11 +5,14 @@
 import {ipcRenderer} from 'electron'
 import {VideoPlayer} from './video'
 import * as ts from './translation_project'
-
+import {SubtitleList} from './subtitle_list'
+import {readFileSync} from 'fs'
+import {parse} from 'subtitle'
 
 class ApplicationManager {
-    project ?: ts.TranslationProject;
-    videoplayer ?: VideoPlayer;
+    project: ts.TranslationProject;
+    videoplayer: VideoPlayer;
+    sublist: SubtitleList;
 
     constructor() {
         this.project = undefined;
@@ -65,9 +68,16 @@ class ApplicationManager {
 
     // Loads project settings and shows the main program section
     startProject(newProject: ts.TranslationProject) {
-
         this.project = newProject;
-        this.videoplayer = new VideoPlayer(this.project);
+
+        // Temporary stuff, just to try. We're not going to read twice the subtitle files
+        let subsContent: string = readFileSync(this.project.subtitleFilePath, 'utf-8');
+        //let referenceContent: string = readFileSync(referenceFilePath, 'utf-8'); // TODO
+        let subsArray = parse(subsContent);
+        //let referenceArray = parse(referenceContent); // TODO
+
+        this.videoplayer = new VideoPlayer(this.project, subsArray);
+        this.sublist = new SubtitleList(subsArray);
 
         //change view to the main program section
         document.getElementById("newProjectSection").classList.remove('is-shown');

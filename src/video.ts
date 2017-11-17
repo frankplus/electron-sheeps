@@ -12,7 +12,7 @@ export class VideoPlayer {
     private getExtensionFromPath(path: string){
         return path.split('.').pop();
     }
-    constructor(proj: TranslationProject) {
+    constructor(proj: TranslationProject, subsArray: any[]) {
         let mediaSourcePath = proj.mediaSourcePath;
         let subsFilePath = proj.subtitleFilePath;
 
@@ -59,8 +59,6 @@ export class VideoPlayer {
                 let currentSubtitle;
                 for(let subtitle of subs){
                     if(subtitle.start <= currentTime && subtitle.end > currentTime){
-                        console.log(subtitle)
-                        console.log(currentTime)
                         currentSubtitle = subtitle;
                         break;
                     }
@@ -71,7 +69,7 @@ export class VideoPlayer {
                 else{
                     setTextFunction("");
                 }
-            }, 1000); //executed every second
+            }, 100); //executed every second
         
     }
 
