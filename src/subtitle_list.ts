@@ -70,15 +70,15 @@ export class SubtitleList {
         // Do we really need to do this thing in order to access the current class
         // inside the event handler?
         // Is there a better way? Or is this indicating that this is bad design?
-        let thiz = this;
+        /*let thiz = this;
         newRow.addEventListener('click', function(event) {
             thiz.onRowClicked(event);
-        });
+        });*/
     }
 
-    private onRowClicked(event) {
+    /*private onRowClicked(event) {
         alert(event.currentTarget);
         let sub = { start: 123, end: 125, text: 'Questa è una prova' };
         this.addSubtitle(sub);
-    }
+    }*/
 }

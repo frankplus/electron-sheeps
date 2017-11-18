@@ -49,4 +49,9 @@ export class VideoPlayer {
     pause(){
         this.videoPanel.pause();
     }
+
+    //jump video to time in ms
+    jumpToTime(time: number){
+        this.videoPanel.currentTime = time/1000; //convert to seconds
+    }
 }

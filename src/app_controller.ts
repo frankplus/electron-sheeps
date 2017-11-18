@@ -61,4 +61,8 @@ export class ApplicationController {
             window.clearInterval(this.applicationLoop);
         }
     }
+
+    jumpToSubIndex(subIndex: number){
+        this.videoplayer.jumpToTime(this.subsArray[subIndex].start);
+    }
 }

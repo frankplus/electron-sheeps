@@ -55,6 +55,13 @@ class ApplicationManager {
         document.getElementById('pausebutton').addEventListener("click", () => {
             this.appcontroller.pause();
         });
+
+        //onclick on the list of subtitles
+        document.getElementById('subtitlelist').addEventListener("click", (e) => {
+            let tr = <HTMLTableRowElement>e.srcElement.parentElement;
+            let subIndex = tr.rowIndex-1;
+            this.appcontroller.jumpToSubIndex(subIndex);
+        });
     }
 
     // Loads project settings and shows the main program section
