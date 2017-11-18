@@ -2,60 +2,89 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-const { ipcRenderer } = require('electron')
+import {ipcRenderer} from 'electron'
+import * as ts from './translation_project'
+import {ApplicationController }from './app_controller'
 
-let ts = require('./translation_project')
+class ApplicationManager {
+    project: ts.TranslationProject;
+    appcontroller: ApplicationController;
 
-//uncomment for example project
-let proj;
+    constructor() {
+        this.project = undefined;
 
-//ipc main process-renderers listeners
-ipcRenderer.on('open-project', (event, file) => {
-    proj = ts.loadTranslationProjectFile(file);
-    console.log(`project opened ${file}`);
-    switchToMainSection();
-});
+        // Listen to events that can change the application state
+        ipcRenderer.on('open-project', (event, file) => {
+            let project = ts.loadTranslationProjectFile(file);
+            console.log(`project opened ${file}`);
+            this.startProject(project);
+        });
 
-ipcRenderer.on('save-project', (event, outputfile) => {
-    ts.writeTranslationProjectToFile(proj, outputfile);
-    console.log(`project saved`);
-});
+        ipcRenderer.on('save-project', (event, outputFile) => {
+            if(this.project) {
+                ts.writeTranslationProjectToFile(this.project, outputFile);
+            }
+        });
 
-ipcRenderer.on('new-project', (event, outputfile) => {
-    switchToNewProjectSection();
-});
+        ipcRenderer.on('new-project', (event, outputFile) => {
+            this.createNewProject();
+        });
 
-let form = document.getElementById("newProjectForm");
-form.addEventListener('submit', function createNewProject(ev) {
-    // Prevent <form> from sending a request, we're overriding this behavior here
-    ev.preventDefault();
+        document.getElementById("newProjectForm").addEventListener('submit', (ev) => {
+            // Prevent <form> from sending an HTTP request, we're overriding this behaviour here
+            ev.preventDefault();
 
-    //create project using input data
-    let source:any = document.getElementById("audioSource");
-    let subfile:any = document.getElementById("subtitleFile");
-    let refsubfile:any = document.getElementById("referenceSubtitleFile");
+            //create project using input data
+            let source  = <HTMLInputElement>document.getElementById("mediaSource");
+            let subfile = <HTMLInputElement>document.getElementById("subtitleFile");
+            let refsubfile = <HTMLInputElement>document.getElementById("referenceSubtitleFile");
 
-    let audiosourcepath = source.files[0].path;
-    let subfilepath = subfile.files[0].path;
-    let refsubfilepath = refsubfile.files[0].path;
+            let audiosourcepath = source.files[0].path;
+            let subfilepath = subfile.files[0].path;
+            let refsubfilepath = refsubfile.files[0] ? refsubfile.files[0].path : undefined;
 
-    console.log("source: " + audiosourcepath);
-    console.log("subfile: " + subfilepath);
-    console.log("refsubfile: " + refsubfilepath);
+            this.startProject(new ts.TranslationProject(audiosourcepath, subfilepath, refsubfilepath));
+        });
 
-    proj = new ts.TranslationProject(audiosourcepath, subfilepath, refsubfilepath);
 
-    switchToMainSection();
-});
+        //application control buttons
+        document.getElementById('playbutton').addEventListener("click", () => {
+            this.appcontroller.play();
+        });
 
-function switchToMainSection(){
-    //change view to the main program section
-    document.getElementById("newProjectSection").classList.remove('is-shown');
-    document.getElementById("mainSection").classList.add('is-shown');
+        document.getElementById('pausebutton').addEventListener("click", () => {
+            this.appcontroller.pause();
+        });
+
+        //onclick on the list of subtitles
+        document.getElementById('subtitlelist').addEventListener("click", (e) => {
+            let tr = <HTMLTableRowElement>e.srcElement.parentElement;
+            let subIndex = tr.rowIndex-1;
+            this.appcontroller.jumpToSubIndex(subIndex);
+        });
+    }
+
+    // Loads project settings and shows the main program section
+    startProject(newProject: ts.TranslationProject) {
+        this.project = newProject;
+
+        this.appcontroller = new ApplicationController(this.project);
+
+        //change view to the main program section
+        document.getElementById("newProjectSection").classList.remove('is-shown');
+        document.getElementById("mainSection").classList.add('is-shown');
+    }
+
+    // Shows the form to create a new project
+    createNewProject() {
+        //change view to the new project form section
+        document.getElementById("newProjectSection").classList.add('is-shown');
+        document.getElementById("mainSection").classList.remove('is-shown');
+        
+        //stop video and subtitles
+        this.appcontroller.pause();
+    }
 }
 
-function switchToNewProjectSection(){
-    //change view to the new project form section
-    document.getElementById("newProjectSection").classList.add('is-shown');
-    document.getElementById("mainSection").classList.remove('is-shown');
-}
+
+let appManager = new ApplicationManager();
