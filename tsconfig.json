@@ -16,7 +16,8 @@
     "./src/main.ts",
     "./src/translation_project.ts",
     "./src/video.ts",
-    "./src/subtitle_list.ts"
+    "./src/subtitle_list.ts",
+    "./src/app_controller.ts"
   ],
   "angularCompilerOptions": {
     "skipTemplateCodegen": true

@@ -60,6 +60,8 @@
 #playerpanel {
     background-color: green;
     position: relative;
+    height: 100%;
+    max-height: 300px;
 }
 
 #videopanel {
@@ -102,7 +104,8 @@
 #sublist td,th {
     border: 1px solid #dddddd;
     text-align: left;
-    padding: 8px;
+    padding: 6px;
+    font-size: small;
 }
 
 #sublist tr:hover td {

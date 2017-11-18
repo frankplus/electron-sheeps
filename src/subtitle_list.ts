@@ -6,6 +6,9 @@ export class SubtitleList {
     public constructor(subsArray: any[]) {
         this.table = <HTMLTableElement>document.getElementById('subtitlelist');
 
+        //clear all previous content
+        this.table.innerHTML = "";
+
         for(let subtitle of subsArray) {
             this.appendRow(subtitle);
         }

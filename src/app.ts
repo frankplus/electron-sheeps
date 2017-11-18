@@ -3,20 +3,15 @@
 // All of the Node.js APIs are available in this process.
 
 import {ipcRenderer} from 'electron'
-import {VideoPlayer} from './video'
 import * as ts from './translation_project'
-import {SubtitleList} from './subtitle_list'
-import {readFileSync} from 'fs'
-import {parse} from 'subtitle'
+import {ApplicationController }from './app_controller'
 
 class ApplicationManager {
     project: ts.TranslationProject;
-    videoplayer: VideoPlayer;
-    sublist: SubtitleList;
+    appcontroller: ApplicationController;
 
     constructor() {
         this.project = undefined;
-        this.videoplayer = undefined;
 
         // Listen to events that can change the application state
         ipcRenderer.on('open-project', (event, file) => {
@@ -48,21 +43,17 @@ class ApplicationManager {
             let subfilepath = subfile.files[0].path;
             let refsubfilepath = refsubfile.files[0] ? refsubfile.files[0].path : undefined;
 
-            console.log("source: " + audiosourcepath);
-            console.log("subfile: " + subfilepath);
-            console.log("refsubfile: " + refsubfilepath);
-
             this.startProject(new ts.TranslationProject(audiosourcepath, subfilepath, refsubfilepath));
         });
 
 
         //application control buttons
         document.getElementById('playbutton').addEventListener("click", () => {
-            this.videoplayer.play();
+            this.appcontroller.play();
         });
 
         document.getElementById('pausebutton').addEventListener("click", () => {
-            this.videoplayer.pause();
+            this.appcontroller.pause();
         });
     }
 
@@ -70,14 +61,7 @@ class ApplicationManager {
     startProject(newProject: ts.TranslationProject) {
         this.project = newProject;
 
-        // Temporary stuff, just to try. We're not going to read twice the subtitle files
-        let subsContent: string = readFileSync(this.project.subtitleFilePath, 'utf-8');
-        //let referenceContent: string = readFileSync(referenceFilePath, 'utf-8'); // TODO
-        let subsArray = parse(subsContent);
-        //let referenceArray = parse(referenceContent); // TODO
-
-        this.videoplayer = new VideoPlayer(this.project, subsArray);
-        this.sublist = new SubtitleList(subsArray);
+        this.appcontroller = new ApplicationController(this.project);
 
         //change view to the main program section
         document.getElementById("newProjectSection").classList.remove('is-shown');
@@ -91,7 +75,7 @@ class ApplicationManager {
         document.getElementById("mainSection").classList.remove('is-shown');
         
         //stop video and subtitles
-        this.videoplayer.pause();
+        this.appcontroller.pause();
     }
 }
 
